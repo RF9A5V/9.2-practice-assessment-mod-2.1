@@ -94,7 +94,18 @@ function getCreditCardDetails(people) {
     @returns {String[]} - Array of employers, sorted alphabetically, unique values only.
 */
 
-function getAllEmployers(people) {}
+function getAllEmployers(people) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+  let employers = [];
+  people.forEach((person) => {
+    if (!employers.includes(person.employer)) {
+      employers.push(person.employer);
+    }
+  });
+  return employers.sort();
+}
 
 /* 
     Finds a person by a given first name and last name from a list of people.
