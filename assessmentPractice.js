@@ -45,7 +45,15 @@ The data you're working with will look like this:
     @returns {Object[]} - A list of people that are employed by the given employer
 */
 
-function filterDataByEmployer(people, employer) {}
+function filterDataByEmployer(people, employer) {
+  if (people.length === 0) {
+    throw "The `people` array is empty.";
+  }
+  if (!employer) {
+    throw "No employer provided.";
+  }
+  return people.filter((person) => person.employer === employer);
+}
 
 /* 
     Returns the credit card details of every person in the given array. Each object in the array should look like: 
@@ -60,7 +68,18 @@ function filterDataByEmployer(people, employer) {}
     @returns {Object[]} - Array of objects matching the pattern in this problem description.
 */
 
-function getCreditCardDetails(people) {}
+function getCreditCardDetails(people) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+
+  return people.map((person) => {
+    let name = person.first_name + " " + person.last_name;
+    let number = person.credit_card.number;
+    let type = person.credit_card.type;
+    return { name, number, type };
+  });
+}
 
 /* 
     Returns a unique array of employers, sorted alphabetically from A-Z.
@@ -132,10 +151,10 @@ function ipIsPresent(people, ipAddress) {}
 function findLargeOctets(people) {}
 
 module.exports = {
-    filterDataByEmployer,
-    getCreditCardDetails,
-    getAllEmployers,
-    getPersonByName,
-    ipIsPresent,
-    findLargeOctets,
-}
+  filterDataByEmployer,
+  getCreditCardDetails,
+  getAllEmployers,
+  getPersonByName,
+  ipIsPresent,
+  findLargeOctets,
+};
