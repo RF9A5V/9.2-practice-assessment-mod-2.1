@@ -45,7 +45,15 @@ The data you're working with will look like this:
     @returns {Object[]} - A list of people that are employed by the given employer
 */
 
-function filterDataByEmployer(people, employer) {}
+function filterDataByEmployer(people, employer) {
+  if (people.length === 0) {
+    throw "The `people` array is empty.";
+  }
+  if (!employer) {
+    throw "No employer provided.";
+  }
+  return people.filter((person) => person.employer === employer);
+}
 
 /* 
     Returns the credit card details of every person in the given array. Each object in the array should look like: 
@@ -60,7 +68,18 @@ function filterDataByEmployer(people, employer) {}
     @returns {Object[]} - Array of objects matching the pattern in this problem description.
 */
 
-function getCreditCardDetails(people) {}
+function getCreditCardDetails(people) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+
+  return people.map((person) => {
+    let name = person.first_name + " " + person.last_name;
+    let number = person.credit_card.number;
+    let type = person.credit_card.type;
+    return { name, number, type };
+  });
+}
 
 /* 
     Returns a unique array of employers, sorted alphabetically from A-Z.
@@ -75,7 +94,18 @@ function getCreditCardDetails(people) {}
     @returns {String[]} - Array of employers, sorted alphabetically, unique values only.
 */
 
-function getAllEmployers(people) {}
+function getAllEmployers(people) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+  let employers = [];
+  people.forEach((person) => {
+    if (!employers.includes(person.employer)) {
+      employers.push(person.employer);
+    }
+  });
+  return employers.sort();
+}
 
 /* 
     Finds a person by a given first name and last name from a list of people.
@@ -92,7 +122,18 @@ function getAllEmployers(people) {}
     @returns {Object} - Person with the given first and last name.
 */
 
-function getPersonByName(people, first, last) {}
+function getPersonByName(people, first, last) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+  let person = people.find(
+    (person) => person.first_name === first && person.last_name === last
+  );
+  if (!person) {
+    throw "Person with given name could not be found.";
+  }
+  return person;
+}
 
 /* 
     Determines whether any person has a given IP.
@@ -108,7 +149,15 @@ function getPersonByName(people, first, last) {}
     @returns {Boolean} - Whether we've found the IP address.
 */
 
-function ipIsPresent(people, ipAddress) {}
+function ipIsPresent(people, ipAddress) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+  if (!ipAddress) {
+    throw "No IP Address given";
+  }
+  return people.some((person) => person.ip_address === ipAddress);
+}
 
 /* 
     An IP address is composed of four numbers, each separated by a dot. Each of those numbers will be between 1 and 255, with some additional rules that we won't get into here. We want to find all people that have IP addresses where all of those numbers in their IP address are greater than 100.
@@ -119,7 +168,7 @@ function ipIsPresent(people, ipAddress) {}
 
     Pass: "102.201.233.103", "255.255.255.255"
 
-    Note that ALL numbers in the IP must be greater than 100.
+    Note that ALL numbers in the IP must be greater than or equal 100.
 
     Throws an error if people is empty (use the string "The `people` array is empty.").
 
@@ -129,13 +178,51 @@ function ipIsPresent(people, ipAddress) {}
     @returns {Object[]} - Array of people matching the conditions in the description.
 */
 
-function findLargeOctets(people) {}
+function findLargeOctets(people) {
+  if (people === undefined || people.length === 0) {
+    throw "The `people` array is empty.";
+  }
+  return people.filter((person) => {
+    console.log(person);
+    let result = person.ip_address.split(".").every((octet) => octet >= 100);
+    console.log(result);
+    return result;
+  });
+}
+
+const people = [
+  {
+    id: 3,
+    first_name: "Darlleen",
+    last_name: "Trickey",
+    email: "dtrickey2@ycombinator.com",
+    gender: "Female",
+    ip_address: "109.100.153.163",
+    credit_card: { number: "3563368800591574", type: "jcb" },
+    username: "dtrickey2",
+    employer: "Edgetag",
+  },
+  {
+    id: 7,
+    first_name: "Livvy",
+    last_name: "Stidworthy",
+    email: "lstidworthy6@techcrunch.com",
+    gender: "Female",
+    ip_address: "183.102.246.106",
+    credit_card: { number: "5602245730954163", type: "bankcard" },
+    username: "lstidworthy6",
+    employer: "Dabjam",
+  },
+];
+
+// console.log(findLargeOctets(people));
+// console.log(filterDataByEmployer(people, "Edgetag"));
 
 module.exports = {
-    filterDataByEmployer,
-    getCreditCardDetails,
-    getAllEmployers,
-    getPersonByName,
-    ipIsPresent,
-    findLargeOctets,
-}
+  filterDataByEmployer,
+  getCreditCardDetails,
+  getAllEmployers,
+  getPersonByName,
+  ipIsPresent,
+  findLargeOctets,
+};
