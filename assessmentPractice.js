@@ -149,7 +149,15 @@ function getPersonByName(people, first, last) {
     @returns {Boolean} - Whether we've found the IP address.
 */
 
-function ipIsPresent(people, ipAddress) {}
+function ipIsPresent(people, ipAddress) {
+  if (people.length === 0 || people === undefined) {
+    throw "The `people` array is empty.";
+  }
+  if (!ipAddress) {
+    throw "No IP Address given";
+  }
+  return people.some((person) => person.ip_address === ipAddress);
+}
 
 /* 
     An IP address is composed of four numbers, each separated by a dot. Each of those numbers will be between 1 and 255, with some additional rules that we won't get into here. We want to find all people that have IP addresses where all of those numbers in their IP address are greater than 100.
