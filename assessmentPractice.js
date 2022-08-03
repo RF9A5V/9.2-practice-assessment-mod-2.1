@@ -168,7 +168,7 @@ function ipIsPresent(people, ipAddress) {
 
     Pass: "102.201.233.103", "255.255.255.255"
 
-    Note that ALL numbers in the IP must be greater than 100.
+    Note that ALL numbers in the IP must be greater than or equal 100.
 
     Throws an error if people is empty (use the string "The `people` array is empty.").
 
@@ -178,7 +178,45 @@ function ipIsPresent(people, ipAddress) {
     @returns {Object[]} - Array of people matching the conditions in the description.
 */
 
-function findLargeOctets(people) {}
+function findLargeOctets(people) {
+  if (people === undefined || people.length === 0) {
+    throw "The `people` array is empty.";
+  }
+  return people.filter((person) => {
+    console.log(person);
+    let result = person.ip_address.split(".").every((octet) => octet >= 100);
+    console.log(result);
+    return result;
+  });
+}
+
+const people = [
+  {
+    id: 3,
+    first_name: "Darlleen",
+    last_name: "Trickey",
+    email: "dtrickey2@ycombinator.com",
+    gender: "Female",
+    ip_address: "109.100.153.163",
+    credit_card: { number: "3563368800591574", type: "jcb" },
+    username: "dtrickey2",
+    employer: "Edgetag",
+  },
+  {
+    id: 7,
+    first_name: "Livvy",
+    last_name: "Stidworthy",
+    email: "lstidworthy6@techcrunch.com",
+    gender: "Female",
+    ip_address: "183.102.246.106",
+    credit_card: { number: "5602245730954163", type: "bankcard" },
+    username: "lstidworthy6",
+    employer: "Dabjam",
+  },
+];
+
+// console.log(findLargeOctets(people));
+// console.log(filterDataByEmployer(people, "Edgetag"));
 
 module.exports = {
   filterDataByEmployer,
