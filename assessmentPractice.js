@@ -45,7 +45,12 @@ The data you're working with will look like this:
     @returns {Object[]} - A list of people that are employed by the given employer
 */
 
-function filterDataByEmployer(people, employer) {}
+function filterDataByEmployer(people, employer) {
+    if (!people.length || !people){
+        throw "The `people` array is empty.";
+    }
+return people.filter(person => person.employer === employer);
+}
 
 /* 
     Returns the credit card details of every person in the given array. Each object in the array should look like: 
@@ -60,7 +65,19 @@ function filterDataByEmployer(people, employer) {}
     @returns {Object[]} - Array of objects matching the pattern in this problem description.
 */
 
-function getCreditCardDetails(people) {}
+function getCreditCardDetails(people) {
+    if (!people.length || !people){
+        throw "The `people` array is empty."
+    }
+    return people.map(person => {
+        return {
+            name: person.first_name + " " + person.last_name,
+            ...person.credit_card,
+    //   number: person.credit_card.number,
+    //   type: person.credit_card.type,
+        }
+    })
+}
 
 /* 
     Returns a unique array of employers, sorted alphabetically from A-Z.
@@ -75,7 +92,19 @@ function getCreditCardDetails(people) {}
     @returns {String[]} - Array of employers, sorted alphabetically, unique values only.
 */
 
-function getAllEmployers(people) {}
+function getAllEmployers(people) {
+    if (!people.length || !people){
+        throw "The `people` array is empty."
+    }
+    let employers = [];
+    people.forEach(person => {
+      if (!employers.includes(person.employer)) {
+        employers.push(person.employer);
+      }
+    });
+    // employers.sort();
+    return employers.sort((a, b) => a > b ? 1: -1);
+}
 
 /* 
     Finds a person by a given first name and last name from a list of people.
@@ -92,7 +121,16 @@ function getAllEmployers(people) {}
     @returns {Object} - Person with the given first and last name.
 */
 
-function getPersonByName(people, first, last) {}
+function getPersonByName(people, first, last) {
+    if (!people.length || !people) {
+        throw "The `people` array is empty.";
+      }
+      let found = people.find(person => person.first_name === first && person.last_name === last);
+      if (!found) {
+        throw "Person with given name could not be found.";
+      }
+      return found;
+}
 
 /* 
     Determines whether any person has a given IP.
@@ -108,7 +146,15 @@ function getPersonByName(people, first, last) {}
     @returns {Boolean} - Whether we've found the IP address.
 */
 
-function ipIsPresent(people, ipAddress) {}
+function ipIsPresent(people, ipAddress) {
+    if (!people.length || !people) {
+        throw "The `people` array is empty.";
+      }
+      if (!ipAddress) {
+        throw "No IP address is provided.";
+      }
+      return people.some(person => person.ip_address == ipAddress);
+}
 
 /* 
     An IP address is composed of four numbers, each separated by a dot. Each of those numbers will be between 1 and 255, with some additional rules that we won't get into here. We want to find all people that have IP addresses where all of those numbers in their IP address are greater than 100.
@@ -129,7 +175,12 @@ function ipIsPresent(people, ipAddress) {}
     @returns {Object[]} - Array of people matching the conditions in the description.
 */
 
-function findLargeOctets(people) {}
+function findLargeOctets(people) {
+    if (!people.length || !people) {
+        throw "The `people` array is empty.";
+      }
+      return people.filter(person => person.ip_address.split(".").every(ip => ip >= 100));
+}
 
 module.exports = {
     filterDataByEmployer,
